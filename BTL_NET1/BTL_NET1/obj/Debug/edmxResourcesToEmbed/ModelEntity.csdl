@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QuanLiTuyenSinhModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="DanhMucLopThi">
+    <Key>
+      <PropertyRef Name="MaLop" />
+    </Key>
+    <Property Name="MaLop" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TenLop" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="HoSoThiSinhs" Relationship="Self.FK__HoSoThiSi__MaLop__267ABA7A" FromRole="DanhMucLopThi" ToRole="HoSoThiSinh" />
+  </EntityType>
+  <EntityType Name="DanhMucMonThi">
+    <Key>
+      <PropertyRef Name="MaMon" />
+    </Key>
+    <Property Name="MaMon" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TenMon" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="KetQuaThis" Relationship="QuanLiTuyenSinhModel.FK__KetQuaThi__MaMon__2B3F6F97" FromRole="DanhMucMonThi" ToRole="KetQuaThi" />
+  </EntityType>
+  <EntityType Name="HoSoThiSinh">
+    <Key>
+      <PropertyRef Name="SBD" />
+    </Key>
+    <Property Name="SBD" Type="String" MaxLength="7" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="HoTenThiSinh" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="MaLop" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="NgaySinh" Type="DateTime" Precision="0" />
+    <Property Name="GioiTinh" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="DiaChi" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DanhMucLopThi" Relationship="Self.FK__HoSoThiSi__MaLop__267ABA7A" FromRole="HoSoThiSinh" ToRole="DanhMucLopThi" />
+    <NavigationProperty Name="KetQuaThis" Relationship="QuanLiTuyenSinhModel.FK__KetQuaThi__SBD__2A4B4B5E" FromRole="HoSoThiSinh" ToRole="KetQuaThi" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK__HoSoThiSi__MaLop__267ABA7A">
+    <End Role="DanhMucLopThi" Type="Self.DanhMucLopThi" Multiplicity="0..1" />
+    <End Role="HoSoThiSinh" Type="Self.HoSoThiSinh" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DanhMucLopThi">
+        <PropertyRef Name="MaLop" />
+      </Principal>
+      <Dependent Role="HoSoThiSinh">
+        <PropertyRef Name="MaLop" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QuanLiTuyenSinhEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DanhMucLopThis" EntityType="Self.DanhMucLopThi" />
+    <EntitySet Name="DanhMucMonThis" EntityType="Self.DanhMucMonThi" />
+    <EntitySet Name="HoSoThiSinhs" EntityType="Self.HoSoThiSinh" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK__HoSoThiSi__MaLop__267ABA7A" Association="Self.FK__HoSoThiSi__MaLop__267ABA7A">
+      <End Role="DanhMucLopThi" EntitySet="DanhMucLopThis" />
+      <End Role="HoSoThiSinh" EntitySet="HoSoThiSinhs" />
+    </AssociationSet>
+    <EntitySet Name="KetQuaThis" EntityType="QuanLiTuyenSinhModel.KetQuaThi" />
+    <AssociationSet Name="FK__KetQuaThi__MaMon__2B3F6F97" Association="QuanLiTuyenSinhModel.FK__KetQuaThi__MaMon__2B3F6F97">
+      <End Role="DanhMucMonThi" EntitySet="DanhMucMonThis" />
+      <End Role="KetQuaThi" EntitySet="KetQuaThis" />
+    </AssociationSet>
+    <AssociationSet Name="FK__KetQuaThi__SBD__2A4B4B5E" Association="QuanLiTuyenSinhModel.FK__KetQuaThi__SBD__2A4B4B5E">
+      <End Role="HoSoThiSinh" EntitySet="HoSoThiSinhs" />
+      <End Role="KetQuaThi" EntitySet="KetQuaThis" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="KetQuaThi">
+    <Key>
+      <PropertyRef Name="SBD" />
+      <PropertyRef Name="MaMon" />
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="SBD" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="true" />
+    <Property Name="MaMon" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Diem" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DanhMucMonThi" Relationship="QuanLiTuyenSinhModel.FK__KetQuaThi__MaMon__2B3F6F97" FromRole="KetQuaThi" ToRole="DanhMucMonThi" />
+    <NavigationProperty Name="HoSoThiSinh" Relationship="QuanLiTuyenSinhModel.FK__KetQuaThi__SBD__2A4B4B5E" FromRole="KetQuaThi" ToRole="HoSoThiSinh" />
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <Association Name="FK__KetQuaThi__MaMon__2B3F6F97">
+    <End Type="QuanLiTuyenSinhModel.DanhMucMonThi" Role="DanhMucMonThi" Multiplicity="1" />
+    <End Type="QuanLiTuyenSinhModel.KetQuaThi" Role="KetQuaThi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DanhMucMonThi">
+        <PropertyRef Name="MaMon" />
+      </Principal>
+      <Dependent Role="KetQuaThi">
+        <PropertyRef Name="MaMon" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__KetQuaThi__SBD__2A4B4B5E">
+    <End Type="QuanLiTuyenSinhModel.HoSoThiSinh" Role="HoSoThiSinh" Multiplicity="1" />
+    <End Type="QuanLiTuyenSinhModel.KetQuaThi" Role="KetQuaThi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HoSoThiSinh">
+        <PropertyRef Name="SBD" />
+      </Principal>
+      <Dependent Role="KetQuaThi">
+        <PropertyRef Name="SBD" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

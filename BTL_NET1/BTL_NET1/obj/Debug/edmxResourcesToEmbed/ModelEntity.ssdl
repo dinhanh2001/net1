@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QuanLiTuyenSinhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DanhMucLopThi">
+    <Key>
+      <PropertyRef Name="MaLop" />
+    </Key>
+    <Property Name="MaLop" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="TenLop" Type="nvarchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="DanhMucMonThi">
+    <Key>
+      <PropertyRef Name="MaMon" />
+    </Key>
+    <Property Name="MaMon" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="TenMon" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="HoSoThiSinh">
+    <Key>
+      <PropertyRef Name="SBD" />
+    </Key>
+    <Property Name="SBD" Type="nvarchar" MaxLength="7" Nullable="false" />
+    <Property Name="HoTenThiSinh" Type="nvarchar" MaxLength="20" />
+    <Property Name="MaLop" Type="nvarchar" MaxLength="10" />
+    <Property Name="NgaySinh" Type="date" />
+    <Property Name="GioiTinh" Type="nvarchar" MaxLength="5" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'QuanLiTuyenSinh.dbo.KetQuaThi' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="KetQuaThi">
+          <Property Name="SBD" Type="nvarchar" MaxLength="7" />
+          <Property Name="MaMon" Type="nvarchar" MaxLength="10" />
+          <Property Name="Diem" Type="int" />
+        </EntityType>-->
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK__HoSoThiSi__MaLop__267ABA7A">
+    <End Role="DanhMucLopThi" Type="Self.DanhMucLopThi" Multiplicity="0..1" />
+    <End Role="HoSoThiSinh" Type="Self.HoSoThiSinh" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DanhMucLopThi">
+        <PropertyRef Name="MaLop" />
+      </Principal>
+      <Dependent Role="HoSoThiSinh">
+        <PropertyRef Name="MaLop" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--Errors Found During Generation:
+error 6004: The table 'QuanLiTuyenSinh.dbo.KetQuaThi' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__KetQuaThi__MaMon__2B3F6F97" />-->
+  <!--Errors Found During Generation:
+error 6004: The table 'QuanLiTuyenSinh.dbo.KetQuaThi' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__KetQuaThi__SBD__2A4B4B5E" />-->
+  <EntityContainer Name="QuanLiTuyenSinhModelStoreContainer">
+    <EntitySet Name="DanhMucLopThi" EntityType="Self.DanhMucLopThi" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DanhMucMonThi" EntityType="Self.DanhMucMonThi" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HoSoThiSinh" EntityType="Self.HoSoThiSinh" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__HoSoThiSi__MaLop__267ABA7A" Association="Self.FK__HoSoThiSi__MaLop__267ABA7A">
+      <End Role="DanhMucLopThi" EntitySet="DanhMucLopThi" />
+      <End Role="HoSoThiSinh" EntitySet="HoSoThiSinh" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
